@@ -74,13 +74,32 @@ class Review extends Component {
     isLoading: true,
   };
 
+  componentDidMount = () => {
+    document.addEventListener("keydown", this.onKeyUp);
+  }
+
   componentWillMount = () => {
     const { sessionId } = this.props.match.params;
 
     if (sessionId) {
       this.fetchSession(sessionId);
     }
+    document.removeEventListener("keydown", this.onKeyUp);
   };
+
+  onKeyUp = (event) => {
+    const handlers = {
+      "Space": () => { this.onReveal(); },
+      "Digit1": () => { this.onReview(event, {value: REVIEW_TYPE.REDO}); },
+      "Digit2": () => { this.onReview(event, {value: REVIEW_TYPE.HARD}); },
+      "Digit3": () => { this.onReview(event, {value: REVIEW_TYPE.EASY}); },
+    };
+
+    if (handlers[event.code]) {
+      handlers[event.code]();
+      event.preventDefault();
+    }
+  }
 
   onCloseModal = () => this.setState({ showModalType: undefined });
 
@@ -92,6 +111,7 @@ class Review extends Component {
     const { value } = data;
     const { index, session: { cards } } = this.state;
     const card = cards[index];
+    console.log(data, index, card);
 
     this.reviewCard(card._id, value);
   };

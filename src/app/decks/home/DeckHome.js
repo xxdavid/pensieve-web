@@ -13,6 +13,7 @@ import { SettingsTab, CardsTab, OverviewTab } from "./tabs";
 import {
   AddCardModal,
   DeleteDeckModal,
+  ImportCardsModal,
   ResetDeckModal,
   MODAL_TYPES,
 } from "../../../components/modals";
@@ -65,6 +66,21 @@ class DeckHome extends Component {
     cardApi.createCard({ deck: deckId, front, back, notes }).then(response => {
       this.setState(({ cards }) => ({ cards: [...cards, response.data] }));
     });
+  };
+
+  importCards = async (text) => {
+    const deckId = this.state.deck._id;
+    const currentCards = this.state.cards;
+    const newCards = text.split("\n").map(it => it.split("\t")).map(it => { return { front: it[1], back: it[0], notes: it[2] } });
+
+    for (let card of newCards) {
+      if (currentCards.find(it => it.front === card.front)) {
+        continue;
+      }
+      const { front, back, notes } = card;
+      const response = await cardApi.createCard({ deck: deckId, front, back, notes });
+      this.setState(({ cards }) => ({ cards: [...cards, response.data] }));
+    }
   };
 
   fetchDeck = deckId => {
@@ -142,6 +158,11 @@ class DeckHome extends Component {
           onClose={this.onCloseModal}
           onSubmit={this.deleteDeck}
         />
+        <ImportCardsModal
+          open={showModalType === MODAL_TYPES.IMPORT_ITEMS}
+          onClose={this.onCloseModal}
+          onSubmit={this.importCards}
+        />
         <ResetDeckModal
           open={showModalType === MODAL_TYPES.RESET_DECK}
           onClose={this.onCloseModal}
@@ -198,6 +219,15 @@ class DeckHome extends Component {
                     className="ml-2"
                   >
                     Add Cards +
+                  </Button>
+                  <Button
+                    basic
+                    color="blue"
+                    onClick={this.onShowModal}
+                    value={MODAL_TYPES.IMPORT_ITEMS}
+                    className="ml-2"
+                  >
+                    Import cards
                   </Button>
                 </div>
                 {deck.recallRate >= 0 && (

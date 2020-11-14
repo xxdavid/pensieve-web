@@ -5,6 +5,7 @@ import DeleteCardModal from "./DeleteCardModal";
 import DeleteUserModal from "./DeleteUserModal";
 import EditDeckModal from "./EditDeckModal";
 import EditCardModal from "./EditCardModal";
+import ImportCardsModal from "./ImportCardsModal";
 import ResetCardModal from "./ResetCardModal";
 import ResetDeckModal from "./ResetDeckModal";
 
@@ -16,6 +17,7 @@ export const MODAL_TYPES = {
   DELETE_USER: "deleteUser",
   EDIT_DECK: "editDeck",
   EDIT_ITEM: "editItem",
+  IMPORT_ITEMS: "importItems",
   RESET_DECK: "resetDeck",
   RESET_ITEM: "resetItem",
 };
@@ -28,6 +30,7 @@ export {
   DeleteUserModal,
   EditDeckModal,
   EditCardModal,
+  ImportCardsModal,
   ResetDeckModal,
   ResetCardModal,
 };

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Button, Form, Modal, TextArea, Input } from "semantic-ui-react";
 
+import './EditCardModal.css';
+
 class EditCardModal extends Component {
   state = { card: this.props.card };
 
@@ -27,12 +29,13 @@ class EditCardModal extends Component {
             <Form.Field required>
               <label htmlFor="front">Front</label>
               <TextArea
-                rows={4}
+                rows={2}
                 name="front"
                 value={front}
                 onChange={this.onChange}
                 autoHeight
                 placeholder="Add to the card front..."
+                class="card-textarea-front"
               />
             </Form.Field>
             <Form.Field>

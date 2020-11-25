@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Button, Form, Modal, TextArea, Label, Input } from "semantic-ui-react";
 
+import './AddCardModal.css';
+
 class AddItemModal extends Component {
   state = { front: "", back: "", notes: "", numCards: 0 };
 
@@ -40,8 +42,9 @@ class AddItemModal extends Component {
                 name="front"
                 autoFocus
                 autoHeight
-                rows={4}
+                rows={2}
                 placeholder="Add to the card front..."
+                class="card-textarea-front"
               />
             </Form.Field>
             <Form.Field>

@@ -251,7 +251,7 @@ class Review extends Component {
                 <div className="my-5 mx-3 d-flex align-items-center w-100" style={{ flex: 1 }}>
                   <Header as="h2" className={isMultiLine ? "text-left w-100" : "text-center w-100"}>
                     <div
-                      className="markdown-body"
+                      className="markdown-body card-content"
                       dangerouslySetInnerHTML={{
                         __html: marked(isLoading ? "Loading cards..." : cardContent),
                       }}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import pluralize from "pluralize";
 import { Button, Header, Icon, Popup, Label, Tab, Dropdown } from "semantic-ui-react";
+import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 
 import * as api from "../deckActions";
 import * as cardApi from "../../cards/cardActions";
@@ -19,6 +20,8 @@ import {
 } from "../../../components/modals";
 
 import "./DeckHome.css";
+
+import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 const errors = {
   400: "Unable to fulfill request. Please try a valid url or go back.",
@@ -63,8 +66,15 @@ class DeckHome extends Component {
   createCard = card => {
     const deckId = this.state.deck._id;
     const { front, back, notes } = card;
-    cardApi.createCard({ deck: deckId, front, back, notes }).then(response => {
+    return cardApi.createCard({ deck: deckId, front, back, notes }).then(response => {
       this.setState(({ cards }) => ({ cards: [...cards, response.data] }));
+    }).catch(e => {
+      toast({
+        title: 'Failed to create card',
+        description: front,
+        color: 'red',
+        time: 0,
+      });
     });
   };
 
@@ -168,6 +178,7 @@ class DeckHome extends Component {
           onClose={this.onCloseModal}
           onSubmit={this.resetDeck}
         />
+        <SemanticToastContainer position="top-right" />
         <div className="container">
           <div className="row">
             <div className="position-relative col-lg-10 offset-lg-1">

@@ -20,6 +20,12 @@ class AddItemModal extends Component {
     this.setState(state => ({ front: "", back: "", notes: "", numCards: state.numCards + 1 }));
   };
 
+  onKeyDown = (e) => {
+    if (e.key === 'Enter' && e.metaKey) {
+      this.onSubmit();
+    }
+  }
+
   render() {
     const { front, back, notes, numCards } = this.state;
     const { open } = this.props;
@@ -33,7 +39,7 @@ class AddItemModal extends Component {
           </div>
         </Modal.Header>
         <Modal.Content>
-          <Form>
+          <Form onKeyDown={this.onKeyDown}>
             <Form.Field required>
               <label htmlFor="front">Front</label>
               <TextArea

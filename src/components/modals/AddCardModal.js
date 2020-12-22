@@ -7,6 +7,8 @@ import './AddCardModal.css';
 class AddItemModal extends Component {
   state = { front: "", back: "", notes: "", numCards: 0 };
 
+  frontSideTextArea = React.createRef();
+
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   onClose = () => {
@@ -18,6 +20,7 @@ class AddItemModal extends Component {
     const { front, back, notes } = this.state;
     this.props.onSubmit({ front, back, notes });
     this.setState(state => ({ front: "", back: "", notes: "", numCards: state.numCards + 1 }));
+    this.frontSideTextArea.current.focus();
   };
 
   onKeyDown = (e) => {
@@ -45,6 +48,7 @@ class AddItemModal extends Component {
               <TextArea
                 value={front}
                 onChange={this.onChange}
+                ref={this.frontSideTextArea}
                 name="front"
                 autoFocus
                 autoHeight

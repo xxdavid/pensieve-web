@@ -35,7 +35,7 @@ class EditCardModal extends Component {
                 onChange={this.onChange}
                 autoHeight
                 placeholder="Add to the card front..."
-                class="card-textarea-front"
+                className="card-textarea-front"
               />
             </Form.Field>
             <Form.Field>

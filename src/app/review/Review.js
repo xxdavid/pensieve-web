@@ -75,7 +75,7 @@ class Review extends Component {
   };
 
   componentDidMount = () => {
-    document.addEventListener("keydown", this.onKeyUp);
+    document.addEventListener("keydown", this.onKeyDown);
   }
 
   componentWillMount = () => {
@@ -84,10 +84,13 @@ class Review extends Component {
     if (sessionId) {
       this.fetchSession(sessionId);
     }
-    document.removeEventListener("keydown", this.onKeyUp);
   };
 
-  onKeyUp = (event) => {
+  componentWillUnmount = () => {
+    document.removeEventListener("keydown", this.onKeyDown);
+  }
+
+  onKeyDown = (event) => {
     const handlers = {
       "Space": () => { this.onReveal(); },
       "Digit1": () => { this.onReview(event, {value: REVIEW_TYPE.REDO}); },
